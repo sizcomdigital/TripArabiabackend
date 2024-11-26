@@ -34,7 +34,6 @@ router.get("/addtour",admincontroller.addtour);
 
 router.delete('/img/:id',tourcontroller.deletePerImage)
 
-
 // categorywise
 router.get('/tours/:categoryId',tourcontroller.getCategoryWiseTours);
 // blog details

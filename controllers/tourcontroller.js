@@ -156,7 +156,7 @@ module.exports = {
   
       // Handle image uploads to Cloudinary
       const localImagePaths = [];
-      const cloudinaryImageUrls = [];
+     
   
       if (req.files && req.files.length > 0) {
         for (const file of req.files) {
@@ -164,15 +164,15 @@ module.exports = {
           localImagePaths.push(file.filename);
   
           // Upload the file to Cloudinary
-          const cloudinaryResponse = await cloudinary.uploader.upload(
-            file.path,
-            {
-              folder: "tour", // Optional: Upload to 'tour' folder in Cloudinary
-            }
-          );
+          // const cloudinaryResponse = await cloudinary.uploader.upload(
+          //   file.path,
+          //   {
+          //     folder: "tour", // Optional: Upload to 'tour' folder in Cloudinary
+          //   }
+          // );
   
           // Push the Cloudinary URL to the list of uploaded image URLs
-          cloudinaryImageUrls.push(cloudinaryResponse.secure_url);
+          // cloudinaryImageUrls.push(cloudinaryResponse.secure_url);
         }
   
         // Combine the new Cloudinary image URLs with the existing ones (without duplicates)
