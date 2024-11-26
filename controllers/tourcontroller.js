@@ -125,6 +125,8 @@ module.exports = {
 
 
    editTour : async (req, res) => {
+    console.log(req.body,"ssssssssssssssssssssssss");
+    
     const { id } = req.params;
   
     try {
@@ -152,12 +154,9 @@ module.exports = {
       if (updatedData.tourHighlights && typeof updatedData.tourHighlights === 'string') {
         updatedData.tourHighlights = updatedData.tourHighlights.split(',').map(item => item.trim());
       }
- 
-  
+
       // Handle image uploads to Cloudinary
       const localImagePaths = [];
-     
-  
       if (req.files && req.files.length > 0) {
         for (const file of req.files) {
           // Save local paths temporarily (if needed for deletion or backup)
@@ -272,13 +271,13 @@ module.exports = {
           localImagePaths.push(file.filename);
 
           // Upload to Cloudinary
-          const cloudinaryResponse = await cloudinary.uploader.upload(
-            file.path,
-            {
-              folder: "blogs", // Optional: Create a folder named 'blogs' in Cloudinary
-            }
-          );
-          cloudinaryImageUrls.push(cloudinaryResponse.secure_url);
+          // const cloudinaryResponse = await cloudinary.uploader.upload(
+          //   file.path,
+          //   {
+          //     folder: "blogs", // Optional: Create a folder named 'blogs' in Cloudinary
+          //   }
+          // );
+          // cloudinaryImageUrls.push(cloudinaryResponse.secure_url);
         }
       }
 
@@ -307,37 +306,35 @@ module.exports = {
     const { blogName, description, miniDescription } = req.body;
 
     try {
-      const blog = await Blog.findById(id);
-      if (!blog) {
-        return res.status(404).json({ message: "Blog not found" });
-      }
-
-      // Update fields
-      blog.blogName = blogName || blog.blogName;
-      blog.description = description || blog.description;
-      blog.miniDescription = miniDescription || blog.miniDescription;
-
-      // Handle new image uploads if any
-      if (req.files && req.files.length > 0) {
-        const imageUrls = [];
-        for (const file of req.files) {
-          const result = await cloudinary.uploader.upload(file.path, {
-            folder: "blogs",
-          });
-          imageUrls.push(result.secure_url);
+        const blog = await Blog.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: "Blog not found" });
         }
-        blog.images = imageUrls; // Replace the old images
-      }
 
-      await blog.save();
-      res.status(200).json({ message: "Blog updated successfully", blog });
+        // Update fields
+        blog.blogName = blogName || blog.blogName;
+        blog.description = description || blog.description;
+        blog.miniDescription = miniDescription || blog.miniDescription;
+
+        // Handle new image uploads if any
+        const localImagePaths = [];
+        if (req.files && req.files.length > 0) {
+            for (const file of req.files) {
+                localImagePaths.push(file.filename); // Use filename for local paths
+            }
+
+            // Combine new images with existing images, avoiding duplicates
+            blog.images = [...new Set([...blog.images, ...localImagePaths])];
+        }
+
+        await blog.save();
+        res.status(200).json({ message: "Blog updated successfully", blog });
     } catch (error) {
-      console.error("Error updating blog:", error);
-      res
-        .status(500)
-        .json({ message: "Failed to update blog", error: error.message });
+        console.error("Error updating blog:", error);
+        res.status(500).json({ message: "Failed to update blog", error: error.message });
     }
-  },
+}
+,
   // Delete a blog post
 
   deleteBlog: async (req, res) => {

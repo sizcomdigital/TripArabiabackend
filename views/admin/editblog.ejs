@@ -48,21 +48,34 @@
                                
                                 <div class="input-wrap mb-45">
                                     <label>Blog Name</label>
-                                    <input type="text" placeholder="Dubai Desert" name="blogName">
+                                    <input type="text" placeholder="Dubai Desert" name="blogName" value="<%= blog.blogName%>">
                                 </div>
                                 <div class="input-wrap mb-45">
                                     <label>Mini Description</label>
                                     <textarea name="miniDescription" rows="12" cols="50"
-                                        placeholder="Write content"></textarea>
+                                        placeholder="Write content"><%= blog.miniDescription%></textarea>
                                 </div>
                                 <div class="input-wrap mb-45">
                                     <label>Description</label>
                                     <textarea name="description" rows="12" cols="50"
-                                        placeholder="Write content"></textarea>
+                                        placeholder="Write content"><%= blog.description%></textarea>
                                 </div>
 
                                 <div class="input-wrap">
              <label>Upload Photo</label>
+             <% blog.images.forEach((image, index) => { %>
+                <div class="upload-image">
+                    <img src="/assets/uploads/<%= image %>" alt="Existing Image <%= index + 1 %>" style="height: 120px; width: 120px; margin-bottom: 5px;">
+                    
+                    <!-- Delete Button with a data attribute to store the image URL -->
+                    <button type="button" class="btn btn-danger btn-sm delete-image" data-image="<%= image %>" data-tour="<%= blog._id %>">Delete</button>
+                </div>
+            <% }) %>
+
+
+
+
+
                  <div class="upload-image-add-car mb-30">
         <!-- First Image Input -->
         <div class="upload-image">
@@ -186,24 +199,10 @@
     document.getElementById('form-add-blog').addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent default form submission
 
-        const form = document.getElementById('form-add-blog');
+        const form = event.target;
         const formData = new FormData(form);
 
-        // Image size validation
-        const files = form.querySelectorAll('input[type="file"]');
-        for (const fileInput of files) {
-            const file = fileInput.files[0];
-            if (file && file.size > 10 * 1024 * 1024) { // 10 MB limit
-                Swal.fire({
-                    icon: 'error',
-                    title: 'File too large!',
-                    text: `The file ${file.name} exceeds the 10 MB size limit.`,
-                });
-                return; // Stop form submission
-            }
-        }
-
-        // Show loader
+        // Display a loader to indicate processing
         const loader = document.createElement('div');
         loader.id = 'loading-overlay';
         loader.style.position = 'fixed';
@@ -216,56 +215,62 @@
         loader.style.justifyContent = 'center';
         loader.style.alignItems = 'center';
         loader.style.zIndex = '9999';
-        loader.innerHTML = '<div class="spinner-border text-light" role="status"><span class="sr-only">...</span></div>';
+        loader.innerHTML = '<div class="spinner-border text-light" role="status"><span class="sr-only">Loading...</span></div>';
         document.body.appendChild(loader);
 
         try {
-            const response = await fetch('/admin/blog', {
-                method: 'POST',
-                body: formData,
+            // Make the API call to update the blog
+            const response = await fetch(`/admin/blogs/<%= blog._id %>`, {
+                method: 'PUT', // HTTP method
+                body: formData, // Form data containing file and text inputs
             });
 
             const result = await response.json();
 
-            // Remove loader
+            // Remove the loader
             document.body.removeChild(loader);
 
             if (response.ok) {
-                // Success message
+                // Show success message
                 Swal.fire({
                     icon: 'success',
-                    title: 'Blog added successfully!',
+                    title: 'Blog updated successfully!',
                     text: result.message,
+                }).then(() => {
+                    // Optionally reset the form or redirect to a different page
+                    window.location.href = "/admin/allblog";  // Redirect to the tours list
                 });
-
-                // Optionally clear the form after submission
-                form.reset();
-
                 // Clear image previews
                 document.querySelectorAll('.image-preview').forEach((img) => {
                     img.style.display = 'none';
                     img.src = '#';
                 });
+
+                // Optionally redirect the user
+                // window.location.href = '/admin/blogs';
             } else {
-                // Error message
+                // Show error message if response is not ok
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error adding blog!',
-                    text: result.message || 'An error occurred.',
+                    title: 'Error updating blog!',
+                    text: result.message || 'An error occurred during the update.',
                 });
             }
         } catch (error) {
-            // Remove loader
+            // Remove the loader in case of error
             document.body.removeChild(loader);
 
+            // Show a generic error message
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
-                text: 'Something went wrong while adding the blog.',
+                text: 'Something went wrong while updating the blog.',
             });
         }
     });
 </script>
+
+
 
 
 

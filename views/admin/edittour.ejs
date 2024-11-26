@@ -87,7 +87,7 @@
                     <label>Upload Photo</label>
                     <% tour.images.forEach((image, index) => { %>
                         <div class="upload-image">
-                            <img src="/assets/uploads/<%= image %>" alt="Existing Image <%= index + 1 %>" style="height: 120px; width: 120px; margin-bottom: 5px;">
+                            <img src="/assets/uploads/<%=image%>" alt="Existing Image <%= index + 1 %>" style="height: 120px; width: 120px; margin-bottom: 5px;">
                             
                             <!-- Delete Button with a data attribute to store the image URL -->
                             <button type="button" class="btn btn-danger btn-sm delete-image" data-image="<%= image %>" data-tour="<%= tour._id %>">Delete</button>
