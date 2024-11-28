@@ -15,7 +15,7 @@ const nocache = require('nocache');
 const Dbconnection = require('./config/connection');
 const app = express();
 const adminRouter = require('./routes/admin');
-// const userRouter = require('./routes/user');
+const userRouter = require('./routes/user');
 // View engine setup
 app.set('views', path.join(__dirname,'views'));
 // const expressLayout = require('express-ejs-layouts')
@@ -33,6 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // Routes
 app.use('/admin',adminRouter);
+app.use('/',userRouter);
+
 // app.use('/',userRouter);
 app.use((req,res) => {
     try {
