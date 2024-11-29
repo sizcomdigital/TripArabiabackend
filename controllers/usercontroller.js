@@ -1,5 +1,6 @@
 const Category = require('../models/categorymodel')
 const Tour = require("../models/tourmodel");
+const Blog = require("../models/blogmodel");
 
 
 module.exports = {
@@ -175,6 +176,20 @@ module.exports = {
         } catch (error) {
             // Handle errors and send a response
             res.status(400).json({ message: "Error fetching tour details", error: error.message });
+        }
+    },
+    getblogpage: async (req, res) => {
+        try {
+            const categories = await Category.find({});
+            const blog = await Blog.find()
+            res.render("user/blog", {
+                categories,
+                blog,
+                activePage: "blog" // Set the active page dynamically
+            });
+        } catch (error) {
+            console.error("Error fetching about page:", error);
+            res.status(400).json({ message: "Error fetching about page", error: error.message });
         }
     }
     

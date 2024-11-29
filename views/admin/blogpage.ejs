@@ -57,8 +57,10 @@
                                 </div>
                                 <div class="input-wrap mb-45">
                                     <label>Description</label>
-                                    <textarea name="description" rows="12" cols="50"
-                                        placeholder="Write content"></textarea>
+                                    <!-- <textarea name="description" rows="12" cols="50"
+                                        placeholder="Write content"></textarea> -->
+                                        <textarea class="textarea-tinymce" name="description"></textarea>
+
                                 </div>
 
                                 <div class="input-wrap">
@@ -185,6 +187,8 @@
 <script>
     document.getElementById('form-add-blog').addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent default form submission
+        tinymce.triggerSave(); // Ensure TinyMCE updates the textarea
+
 
         const form = document.getElementById('form-add-blog');
         const formData = new FormData(form);
