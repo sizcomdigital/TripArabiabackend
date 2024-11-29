@@ -121,9 +121,6 @@ module.exports = {
             res.status(400).json({ message: "Error fetching about page", error: error.message });
         }
     },
-
-
-
     getCategoryWiseTours: async (req, res) => {
         const categories = await Category.find({}).limit();
     
@@ -191,7 +188,29 @@ module.exports = {
             console.error("Error fetching about page:", error);
             res.status(400).json({ message: "Error fetching about page", error: error.message });
         }
+    },
+    getBlogdetailsPage : async (req, res) => {
+        try {
+            const categories = await Category.find({});
+            const { blogId } = req.query;
+            // Validate that the blogId is provided
+            if (!blogId) {
+                return res.status(400).send('Blog ID is required');
+            }
+            // Fetch the blog details from the database
+            const blog = await Blog.findById(blogId);
+            // Check if the blog exists
+            if (!blog) {
+                return res.status(404).send('Blog not found');
+            }
+            // Render the blog details page with the blog data
+            res.render('user/blogdetails', { blog,
+                categories,
+                activePage: "blog" // Set the active page dynamically
+            });
+        } catch (error) {
+            console.error('Error fetching blog details:', error);
+            res.status(500).send('Server error');
+        }
     }
-    
-    
 }

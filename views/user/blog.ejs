@@ -65,7 +65,7 @@
         <div class="list-categories">
             <a href="#" class="new"><%= new Date(post.createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short' }) %></a>
         </div>
-        <a class="post-thumbnail" href="/blog-details/<%= post._id %>">
+        <a class="post-thumbnail" href="/blogDetails?blogId=<%= post._id %>">
             <img src="assets/uploads/<%=post.images[0]%>" alt="Image blog">
         </a>
     </div>
@@ -74,13 +74,13 @@
             <!-- Additional info can go here -->
         </div>
         <h3 class="entry-title">
-            <a href="/blog-details/<%= post._id %>"><%= post.title %></a>
+            <a href="/blogDetails?blogId=<%= post._id %>"><%= post.title %></a>
         </h3>
         <p class="description">
             <%= post.miniDescription.substring(0, 200) %>... <!-- Limit description length -->
         </p>
         <div class="button-main">
-            <a href="/blog-details/<%= post._id %>" class="button-link">Read More <i class="icon-Arrow-11"></i></a>
+            <a href="/blogDetails?blogId=<%= post._id %>" class="button-link">Read More <i class="icon-Arrow-11"></i></a>
         </div>
     </div>
 </article>
@@ -116,7 +116,7 @@
                                             <div class="blogs-container">
                                                 <% blog.forEach(blog => { %>
                                                     <div class="list-recent flex-three">
-                                                        <a href="/blog-details/<%= blog._id %>" class="recent-image">
+                                                        <a href="/blogDetails?blogId=<%= blog._id %>" class="recent-image">
                                                             <img src="assets/uploads/<%=blog.images[0]%>" alt="Image">
                                                         </a>
                                                         <div class="recent-info">
