@@ -7639,8 +7639,8 @@
   letter-spacing: -0.02em;
 }
 .widget-testimonial .testimonial-content .tes {
-  font-size: 29px;
-  font-weight: 700;
+  font-size: 19px;
+  /* font-weight: 500; */
   line-height: 57px;
   color: #081E2A;
   text-transform: capitalize;
