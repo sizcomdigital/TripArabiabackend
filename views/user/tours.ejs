@@ -79,6 +79,8 @@
                             </div>
                             <div class="modal-body">
                                 <form id="bookingForm" style="padding: 10px;" onsubmit="sendToWhatsApp(event)">
+                                    <input type="hidden" id="tourName" name="tourName">
+
                                     <div class="mb-2">
                                         <label for="name" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Name</label>
                                         <input type="text" class="form-control" id="name" style="padding: 6px; font-size: 0.9em;" required>
@@ -159,7 +161,14 @@
                                 <p>From <span class="price-sale">AED <%= tour.actualPrice %></span></p>
                                 <span class="price"><%= tour.tripTime.from %>-<%= tour.tripTime.to %></span>
                             </div>
-                            <span class="tag-listing" data-bs-toggle="modal" data-bs-target="#bookNowModal" style="color: black;">Book Now</span>
+                            <span 
+    class="tag-listing" 
+    data-bs-toggle="modal" 
+    data-bs-target="#bookNowModal" 
+    data-tour-name="<%= tour.tourName %>" 
+    onclick="setTourName(this)"
+    style="color: black;">Book Now</span>
+
                         </div>
                     </div>
                 </div>
@@ -276,9 +285,19 @@
     <script src="/app/js/shortcodes.js"></script>
     <script src="/app/js/main.js"></script>
     <script>
+function setTourName(element) {
+        // Get the tour name from the data attribute
+        const tourName = element.getAttribute('data-tour-name');
+        // Set the value to the hidden input field in the modal
+        document.getElementById('tourName').value = tourName;
+    }
+
+
+
         function sendToWhatsApp(event) {
             event.preventDefault();
-        
+            
+            const tourName = document.getElementById("tourName").value;
             const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const phone = document.getElementById("phone").value;
@@ -289,7 +308,7 @@
             const whatsappNumber = "+971545800101";  // Replace with your WhatsApp number in international format, e.g., "1234567890"
             
             const whatsappMessage = 
-                `Booking Details:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nAdults: ${adults}\nChildren: ${children}\nMessage: ${message}`;
+            `Booking Details:\ntourName: ${tourName}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nAdults: ${adults}\nChildren: ${children}\nMessage: ${message}`;
         
             const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
         
