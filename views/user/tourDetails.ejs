@@ -183,69 +183,58 @@
                                                 <div class="side-bar-right">
                                                     <div class="sidebar-widget">
                                                         <h6 class="block-heading">Book This Tour</h6>
-                                                        <form  style="padding: 10px;" onsubmit="sendToWhatsApp(event)">
-                                                            <!-- Name Field -->
-                                                            <div class="mb-2">
-                                                                <label for="name" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Name</label>
-                                                                <input type="text" class="form-control" id="name" style="padding: 6px; font-size: 0.9em;" required>
-                                                            </div>
-                                                        
-                                                            <!-- Email Field -->
-                                                            <div class="mb-2">
-                                                                <label for="email" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Email</label>
-                                                                <input type="email" class="form-control" id="email" style="padding: 6px; font-size: 0.9em;" required>
-                                                            </div>
-                                                        
-                                                            <!-- Phone Field -->
-                                                            <div class="mb-2">
-                                                                <label for="phone" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Phone</label>
-                                                                <input type="tel" class="form-control" id="phone" style="padding: 6px; font-size: 0.9em;" required>
-                                                            </div>
-                                                         <!-- Phone Field -->
-                                                         <!-- Adults Number Field -->
-                                                         <div class="mb-2">
-                                                            <label for="children" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Adults No</label>
-                                                            <input type="number" class="form-control" id="children" style="padding: 6px; font-size: 0.9em;" required>
-                                                        </div>
 
-<!-- Children Number Field -->
-<div class="mb-2">
-    <label for="children" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Children No</label>
-    <input type="number" class="form-control" id="children" style="padding: 6px; font-size: 0.9em;" required>
-</div>
+    <form style="padding: 10px;" onsubmit="sendToWhatsApp(event)">
+    <!-- Name Field -->
+    <div class="mb-2">
+        <label for="name" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Name</label>
+        <input type="text" class="form-control" id="name" style="padding: 6px; font-size: 0.9em;" required>
+    </div>
 
-                                                            <!-- Date Field -->
-                                                            <div class="mb-2">
-                                                                <label for="date" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Date</label>
-                                                                <input type="date" class="form-control" id="date" style="padding: 6px; font-size: 0.9em;" required>
-                                                            </div>
-                                                        
-                                                            <!-- Time Selection -->
-                                                            <div class="mb-2">
-                                                                <label for="time" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Time</label>
-                                                                <div class="radio">
-                                                                    <input id="first" type="radio" name="time" value="14:00" checked>
-                                                                    <label for="first">14:00</label>
-                                                                    <input id="second" type="radio" name="time" value="16:00">
-                                                                    <label for="second">16:00</label>
-                                                                </div>
-                                                            </div>
-                                                    
-                    
-                                                            <!-- Total -->
-                                                            <div class="mb-2">
-                                                                <label for="total" class="form-label" style="font-size: 0.9em;">Total</label>
-                                                                <span class="total text-main" style="font-size: 1.1em; font-weight: bold;">AED<%= tour.offerPrice%></span>
-                                                            </div>
-                                                        
-                                                           
-                                                        
-                                                            <!-- Submit and Reset Buttons -->
-                                                            <div class="mb-2">
-                                                                <button type="submit" style="background-color: #ffa801; padding: 8px 16px; font-size: 0.9em; border: none; color: white;">Submit Booking</button>
-                                                                <button type="reset" style="background-color: #ccc; padding: 8px 16px; font-size: 0.9em; border: none; margin-left: 10px;">Reset</button>
-                                                            </div>
-                                                        </form>
+    <!-- Email Field -->
+    <div class="mb-2">
+        <label for="email" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Email</label>
+        <input type="email" class="form-control" id="email" style="padding: 6px; font-size: 0.9em;" required>
+    </div>
+
+    <!-- Phone Field -->
+    <div class="mb-2">
+        <label for="phone" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Phone</label>
+        <input type="tel" class="form-control" id="phone" style="padding: 6px; font-size: 0.9em;" required>
+    </div>
+
+    <!-- Adults Number Field -->
+    <div class="mb-2">
+        <label for="adults" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Adults No</label>
+        <input type="number" class="form-control" id="adults" style="padding: 6px; font-size: 0.9em;" required>
+    </div>
+
+    <!-- Children Number Field -->
+    <div class="mb-2">
+        <label for="children" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Children No</label>
+        <input type="number" class="form-control" id="children" style="padding: 6px; font-size: 0.9em;" required>
+    </div>
+
+    <!-- Date Field -->
+    <div class="mb-2">
+        <label for="date" class="form-label" style="font-size: 0.9em; margin-bottom: 4px;">Date</label>
+        <input type="date" class="form-control" id="date" style="padding: 6px; font-size: 0.9em;" required>
+    </div>
+
+    
+
+    <!-- Total -->
+    <div class="mb-2">
+        <label for="total" class="form-label" style="font-size: 0.9em;">per person</label>
+        <span class="total text-main" style="font-size: 1.1em; font-weight: bold;">AED<%= tour.offerPrice %></span>
+    </div>
+
+    <!-- Submit and Reset Buttons -->
+    <div class="mb-2">
+        <button type="submit" style="background-color: #ffa801; padding: 8px 16px; font-size: 0.9em; border: none; color: white;">Submit Booking</button>
+        <button type="reset" style="background-color: #ccc; padding: 8px 16px; font-size: 0.9em; border: none; margin-left: 10px;">Reset</button>
+    </div>
+    </form>
                                                         
                                                     </div>
                                                     <div class="sidebar-widget">
@@ -349,10 +338,8 @@
                     </a>
                 </li>
             </ul>
-
         </div>
     </div>
-
 
     <!-- Javascript -->
     <script src="app/js/jquery.min.js"></script>
@@ -366,6 +353,50 @@
     <script src="app/js/map.js"></script>
     <script src="app/js/shortcodes.js"></script>
     <script src="app/js/main.js"></script>
+
+   <script>
+    function sendToWhatsApp(event) {
+    event.preventDefault(); // Prevent the form from submitting
+    
+    // Collect form data
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const adults = document.getElementById("adults").value;
+    const children = document.getElementById("children").value;
+    const date = document.getElementById("date").value;
+    const tourName = "<%= tour.tourName %>";
+    const offerPrice = "<%= tour.offerPrice %>";
+
+    // Validate required fields
+    if (!name || !email || !phone || !adults || !children || !date ) {
+        alert("Please fill all the fields.");
+        return;
+    }
+
+    // Format message
+    const message = `
+        Booking Request:
+        - Tour: ${tourName}
+        - Name: ${name}
+        - Email: ${email}
+        - Phone: ${phone}
+        - Adults: ${adults}
+        - Children: ${children}
+        - Date: ${date}
+        - Price per person: AED${offerPrice}
+    `.trim();
+
+    const whatsappNumber = "+971545800101"; // Replace with your WhatsApp number in international format
+
+    // WhatsApp URL
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+    // Redirect to WhatsApp
+    window.open(url, "_blank");
+}
+
+   </script>
 
 </body>
 
