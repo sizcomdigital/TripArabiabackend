@@ -337,7 +337,7 @@
                             <div class="col-lg-12">
                                 <div class="box-tour-select-wrap mb--7em">
                                     <% categories.forEach(category => { %>
-                                        <a href="<%= category._id%>" class="box-tour-select-item center wow fadeInUp animated" data-wow-delay="<%= category.delay %>">
+                                        <a href="/category?id=<%= category._id %>" class="box-tour-select-item center wow fadeInUp animated" data-wow-delay="<%= category.delay %>">
                                             <div class="icon">
                                                 <i class="<%= category.iconClass %>"></i>
                                             </div>
