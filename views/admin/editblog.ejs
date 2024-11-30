@@ -57,8 +57,10 @@
                                 </div>
                                 <div class="input-wrap mb-45">
                                     <label>Description</label>
-                                    <textarea name="description" rows="12" cols="50"
+                                    <textarea name="description" rows="12" cols="50" class="textarea-tinymce"
                                         placeholder="Write content"><%= blog.description%></textarea>
+
+
                                 </div>
 
                                 <div class="input-wrap">
@@ -68,7 +70,7 @@
                     <img src="/assets/uploads/<%= image %>" alt="Existing Image <%= index + 1 %>" style="height: 120px; width: 120px; margin-bottom: 5px;">
                     
                     <!-- Delete Button with a data attribute to store the image URL -->
-                    <button type="button" class="btn btn-danger btn-sm delete-image" data-image="<%= image %>" data-tour="<%= blog._id %>">Delete</button>
+                    <button type="button" class="btn btn-danger btn-sm delete-image" data-image="<%= image %>" data-blog="<%= blog._id %>">Delete</button>
                 </div>
             <% }) %>
 
@@ -198,6 +200,8 @@
 <script>
     document.getElementById('form-add-blog').addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent default form submission
+        tinymce.triggerSave(); // Ensure TinyMCE updates the textarea
+
 
         const form = event.target;
         const formData = new FormData(form);
@@ -269,7 +273,41 @@
         }
     });
 </script>
+<script>
+    // Add event listener to the delete buttons
+document.querySelectorAll('.delete-image').forEach(button => {
+  button.addEventListener('click', async (e) => {
+    const imageUrlToDelete = e.target.getAttribute('data-image'); // Get the image URL from the data attribute
+    const blogId = e.target.getAttribute('data-blog'); // Get the tour ID from the data attribute
 
+    try {
+      const response = await fetch(`/admin/blogimg/${blogId}`, {
+        method: 'DELETE', // Use DELETE method for deletion
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageUrl: imageUrlToDelete,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message); // Show success message
+        // Optionally, remove the image from the DOM
+        e.target.closest('.upload-image').remove();
+      } else {
+        alert(data.message); // Show error message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error deleting image');
+    }
+  });
+});
+
+</script>
 
 
 

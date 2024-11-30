@@ -435,8 +435,6 @@ if (tour.tripTime) {
     }
   }
 }
-
-
       // Fetch all categories to allow selection in the edit form
       const categories = await Category.find({}).select("_id name"); // Fetch only required fields
 
@@ -470,6 +468,24 @@ if (tour.tripTime) {
       console.error('Error deleting image:', error);
       res.status(500).json({ success: false, message: 'Server error' });
     }
+  },
+  deletePerblogImage : async (req, res) => {
+    try {
+      const blogId = req.params.id; // Get the tour ID from the URL parameter
+      const imageUrlToDelete = req.body.imageUrl; // Get the image URL to delete from the request body
+      // Find the tour by ID
+      const blog = await Blog.findById(blogId);
+      if (!blog) {
+        return res.status(404).json({ success: false, message: 'blog not found' });
+      }
+      // Remove the image from the images array
+      blog.images = blog.images.filter(imageUrl => imageUrl !== imageUrlToDelete);
+      // Save the updated tour
+      await blog.save();
+      res.json({ success: true, message: 'Image deleted successfully', blog });
+    } catch (error) {
+      console.error('Error deleting image:', error);
+      res.status(500).json({ success: false, message: 'Server error' });
+    }
   }
-  
 };

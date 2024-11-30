@@ -41,6 +41,8 @@ router.post('/blog', upload.array('images', 5), tourcontroller.addBlog); // 'ima
 router.get('/blogs/:id',tourcontroller.geteditblog); 
 router.put('/blogs/:id', upload.array('images',5), tourcontroller.editBlog);
 router.delete('/blogs/:id', tourcontroller.deleteBlog);
+router.delete('/blogimg/:id',tourcontroller.deletePerblogImage)
+
 router.get('/blog',admincontroller.getblogpage)
 router.get('/allblog',tourcontroller.allblogs)
 
