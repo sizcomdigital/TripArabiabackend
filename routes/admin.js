@@ -3,48 +3,48 @@ const router = express.Router();
 const admincontroller = require('../controllers/admincontroller')
 const tourcontroller = require('../controllers/tourcontroller')
 const upload = require('../config/multer')
-
+const verifyToken = require('../middleware/authmiddleware')
 
 // login route
 router.get("/login",admincontroller.admingetlogin);
-router.get("/",admincontroller.adminhome);
+router.get("/",verifyToken,admincontroller.adminhome);
 router.post("/login",admincontroller.adminlogin);
 router.post("/register",admincontroller.register);
-router.post('/logout', admincontroller.logout)
+router.post('/logout',verifyToken, admincontroller.logout)
 
 // category details
-router.get("/addcategory",admincontroller.addcategory);
-router.post("/categories",admincontroller.postaddCategory );
-router.put("/categories/:id",admincontroller.editCategory );
-router.get("/allcategory",admincontroller.allcategory);
-router.delete("/deletecategory/:id",admincontroller.deleteCategory);
+router.get("/addcategory",verifyToken,admincontroller.addcategory);
+router.post("/categories",verifyToken,admincontroller.postaddCategory );
+router.put("/categories/:id",verifyToken,admincontroller.editCategory );
+router.get("/allcategory",verifyToken,admincontroller.allcategory);
+router.delete("/deletecategory/:id",verifyToken,admincontroller.deleteCategory);
 
 // tour details
-router.post('/tours', upload.array('images', 5), tourcontroller.addTour); // 'images' is the field name in the form
+router.post('/tours',verifyToken, upload.array('images', 5), tourcontroller.addTour); // 'images' is the field name in the form
  //get edit tour
-router.get('/tours/:id',tourcontroller.geteditTour);
+router.get('/tours/:id',verifyToken,tourcontroller.geteditTour);
 // Edit a tour
-router.put('/tours/:id',upload.array('images', 5),tourcontroller.editTour);
+router.put('/tours/:id',verifyToken,upload.array('images', 5),tourcontroller.editTour);
 // Delete a tour
-router.delete('/tours/:id',tourcontroller.deleteTour);
+router.delete('/tours/:id',verifyToken,tourcontroller.deleteTour);
 // Get all tours
-router.get('/tours',tourcontroller.getAllTours);
-router.get("/alltour",admincontroller.alltours);
-router.get("/addtour",admincontroller.addtour);
+router.get('/tours',verifyToken,tourcontroller.getAllTours);
+router.get("/alltour",verifyToken,admincontroller.alltours);
+router.get("/addtour",verifyToken,admincontroller.addtour);
 
-router.delete('/img/:id',tourcontroller.deletePerImage)
+router.delete('/img/:id',verifyToken,tourcontroller.deletePerImage)
 
 // categorywise
-router.get('/tours/:categoryId',tourcontroller.getCategoryWiseTours);
+router.get('/tours/:categoryId',verifyToken,tourcontroller.getCategoryWiseTours);
 // blog details
-router.post('/blog', upload.array('images', 5), tourcontroller.addBlog); // 'images' is the field name in the form
-router.get('/blogs/:id',tourcontroller.geteditblog); 
-router.put('/blogs/:id', upload.array('images',5), tourcontroller.editBlog);
-router.delete('/blogs/:id', tourcontroller.deleteBlog);
-router.delete('/blogimg/:id',tourcontroller.deletePerblogImage)
+router.post('/blog',verifyToken, upload.array('images', 5), tourcontroller.addBlog); // 'images' is the field name in the form
+router.get('/blogs/:id',verifyToken,tourcontroller.geteditblog); 
+router.put('/blogs/:id',verifyToken, upload.array('images',5), tourcontroller.editBlog);
+router.delete('/blogs/:id',verifyToken, tourcontroller.deleteBlog);
+router.delete('/blogimg/:id',verifyToken,tourcontroller.deletePerblogImage)
 
-router.get('/blog',admincontroller.getblogpage)
-router.get('/allblog',tourcontroller.allblogs)
+router.get('/blog',verifyToken,admincontroller.getblogpage)
+router.get('/allblog',verifyToken,tourcontroller.allblogs)
 
 
 module.exports= router

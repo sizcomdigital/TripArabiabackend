@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const verifyToken = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
-        return res.redirect('/admin/adminlogin');
+        return res.redirect('/admin/login');
     }
     try {
         // Verify the token
